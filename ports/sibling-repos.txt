@@ -1,0 +1,3 @@
+# stage implements retarget's mesh_source + mesh_sink over OpenUSD.
+weftfit/retarget          # source of the port contracts (mesh_source.h / mesh_sink.h)
+v-sekai-multiplayer-fabric/fabric-stage-runtime  # prebuilt per-triplet usd_ms (Hex: stage_runtime)
