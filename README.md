@@ -1,18 +1,15 @@
-# weftfit/stage
+# interactor-stage
 
-Scene-description (**OpenUSD**) source+sink **adapter** for weftfit — implements
-`retarget`'s `mesh_source` / `mesh_sink` ports by reading and writing `.usda`
-stages. Named to avoid the OpenUSD trademark (kept only here in the description),
-matching `stage_runtime`.
+A scene-description mesh source and sink that reads and writes text scene files for the retarget pipeline's mesh ports.
 
-- **`adapters/bridge/`** — the `cloth_fit_usd` dlopen C-ABI bridge: the only unit
-  that links `usd_ms`, so consumers link zero USD and USD's TBB stays isolated
-  (dlsym stub on POSIX, delay-loaded import lib on llvm-mingw).
-- **`adapters/io/`** — `USDReader` / `USDWriter`: mesh ⇄ `UsdGeomMesh`, preserving
-  groups (native `UsdGeomSubset` + `polyfem:*` attrs); writes stage `upAxis="Y"` +
-  mesh `orientation="rightHanded"` (canonical Godot frame).
-- **`ports/`** — the contracts this adapter implements.
+## What it is for
 
-Depends on **[`stage_runtime`](https://github.com/v-sekai-multiplayer-fabric/fabric-stage-runtime)**
-(prebuilt per-triplet `usd_ms`: `x86_64-linux-gnu`, `aarch64-apple-darwin`,
-`x86_64-windows-msvc`, `x86_64-windows-gnu`).
+It implements the mesh source and sink contracts the retarget pipeline drives, keeps a mesh's face groups, and writes meshes in the engine's up axis and winding. A small C bridge loads the scene-description runtime when it is first called, so its callers link none of it.
+
+## Build and run
+
+There is no build file. A consumer compiles these sources against the prebuilt scene-description runtime from the stage runtime repository.
+
+## Licence
+
+MIT; see `LICENSE`.
